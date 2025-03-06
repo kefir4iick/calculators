@@ -2,6 +2,20 @@
 #include <vector>
 #include <cmath>
 using namespace std;
+long long gcd(long long a, long long b) {
+    while (b != 0) {
+        long long с = b;
+        b = a % b;
+        a = с;
+    }
+    return a;
+}
+long long lcm(long long a, long long b) {
+    if (a == 0 || b == 0) {
+        return 0;
+    }
+    return (a * b) / gcd(a, b);
+}
 int main() {
     int n, temp;
     std::cout << "Enter n: ";
@@ -10,7 +24,7 @@ int main() {
     
     std::vector<int> factors;
     std::vector<int> mult;
-    std::vector<int> result;
+    std::vector<long long> result;
     
     while (n % 2 == 0) {
         factors.push_back(2);
@@ -76,6 +90,18 @@ int main() {
         phi = phi * result[i];
     }
     std::cout << " = " << phi << std::endl;
+    
+    long long psy = result[0];
+    for (size_t i = 1; i < result.size(); ++i) {
+        psy = lcm(psy, result[i]);
+    }
+    
+    std::cout << "psy(n) = psy(" << temp << ") = lcm(" << result[0];
+    for(int i = 1; i < result.size(); i++)
+    {
+        std::cout << ", " << result[i];
+    }
+    std::cout << ") = " << psy;
 
     return 0;
 }
